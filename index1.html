@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .navbar ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        
+        .chart-section {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .chart-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notification-panel {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Network Management Dashboard</h1>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Network Status</a></li>
+                    <li><a href="#">Configuration</a></li>
+                    <li><a href="#">Alerts</a></li>
+                    <li><a href="#">Reports</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="chart-section">
+                <div class="chart-container">
+                    <h2>Network Traffic</h2>
+                    <canvas id="networkTrafficChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Server Uptime</h2>
+                    <canvas id="serverUptimeChart"></canvas>
+                </div>
+            </section>
+
+            <section class="notification-panel">
+                <h2>Recent Alerts</h2>
+                <ul id="alertList">
+                    <!-- Alerts will be populated here -->
+                </ul>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Network Management Inc. All rights reserved.</p>
+            <p><a href="https://github.com/mahmed-eng" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sample data for charts
+            const trafficData = {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Network Traffic',
+                    data: [300, 500, 400, 700, 600],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const uptimeData = {
+                labels: ['Online', 'Offline'],
+                datasets: [{
+                    label: 'Server Uptime',
+                    data: [90, 10],
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1
+                }]
+            };
+
+            // Initialize charts
+            const ctxTraffic = document.getElementById('networkTrafficChart').getContext('2d');
+            const ctxUptime = document.getElementById('serverUptimeChart').getContext('2d');
+
+            new Chart(ctxTraffic, {
+                type: 'line',
+                data: trafficData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { beginAtZero: true },
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            new Chart(ctxUptime, {
+                type: 'doughnut',
+                data: uptimeData,
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Sample alerts data
+            const alerts = [
+                { message: 'High CPU usage detected on server 1.' },
+                { message: 'Network latency increased in region 3.' },
+                { message: 'Firmware update available for router 5.' }
+            ];
+
+            const alertList = document.getElementById('alertList');
+            alerts.forEach(alert => {
+                const listItem = document.createElement('li');
+                listItem.textContent = alert.message;
+                alertList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
