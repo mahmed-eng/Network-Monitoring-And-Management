@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        
+        .navbar ul li {
+            margin: 0 15px;
+        }
+        
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .config-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .config-section h2 {
+            margin-top: 0;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Configuration Management</h1>
+        </header>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="alerts.html">Alerts</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="config-section">
+                <h2>Backup Configuration</h2>
+                <form id="backupForm">
+                    <div class="form-group">
+                        <label for="backupLocation">Backup Location:</label>
+                        <input type="text" id="backupLocation" name="backupLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Backup Now</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="config-section">
+                <h2>Restore Configuration</h2>
+                <form id="restoreForm">
+                    <div class="form-group">
+                        <label for="restoreFile">Select Backup File:</label>
+                        <input type="file" id="restoreFile" name="restoreFile" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Restore Now</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="config-section">
+                <h2>Software Updates</h2>
+                <form id="updateForm">
+                    <div class="form-group">
+                        <label for="softwareVersion">Current Software Version:</label>
+                        <input type="text" id="softwareVersion" name="softwareVersion" readonly value="1.0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateFile">Upload Update File:</label>
+                        <input type="file" id="updateFile" name="updateFile" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Update Software</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Network Management Inc. All rights reserved.</p>
+            <p><a href="https://github.com/mahmed-eng" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backupForm = document.getElementById('backupForm');
+            const restoreForm = document.getElementById('restoreForm');
+            const updateForm = document.getElementById('updateForm');
+
+            backupForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert('Backup process initiated.');
+                // Implement backup logic here
+            });
+
+            restoreForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert('Restore process initiated.');
+                // Implement restore logic here
+            });
+
+            updateForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert('Software update process initiated.');
+                // Implement update logic here
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        
+        .navbar ul li {
+            margin: 0 15px;
+        }
+        
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .active-tab {
+            display: block;
+        }
+        
+        .chart-container,
+        .status-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .status-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .status-container table th, .status-container table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .status-container .status-online {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-container .status-offline {
+            color: red;
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Network Management Dashboard</h1>
+        </header>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="#" data-tab="home">Home</a></li>
+                <li><a href="Network_Status.html" data-tab="network-status">Network Status</a></li>
+                <li><a href="#" data-tab="configuration">Configuration</a></li>
+                <li><a href="#" data-tab="alerts">Alerts</a></li>
+                <li><a href="#" data-tab="reports">Reports</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Home Tab -->
+            <div id="home" class="tab-content active-tab">
+                <div class="chart-container">
+                    <h2>Network Traffic</h2>
+                    <canvas id="networkTrafficChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Server Uptime with Prediction</h2>
+                    <canvas id="serverUptimeChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Network Status Tab -->
+            <div id="network-status" class="tab-content">
+                <div class="status-container">
+                    <h2>Network Devices Status</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Status</th>
+                                <th>Latency (ms)</th>
+                                <th>Bandwidth (Mbps)</th>
+                                <th>Packet Loss (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deviceStatusTable">
+                            <!-- Device status will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Configuration, Alerts, and Reports Tabs (empty for now) -->
+            <div id="configuration" class="tab-content">
+                <h2>Configuration</h2>
+                <!-- Configuration content -->
+            </div>
+            <div id="alerts" class="tab-content">
+                <h2>Alerts</h2>
+                <ul id="alertList">
+                    <!-- Alerts will be populated here -->
+                </ul>
+            </div>
+            <div id="reports" class="tab-content">
+                <h2>Reports</h2>
+                <!-- Reports content -->
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Network Management Inc. All rights reserved.</p>
+            <p><a href="https://github.com/mahmed-eng" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Chart initialization code
+
+            const trafficChartCtx = document.getElementById('networkTrafficChart').getContext('2d');
+            const uptimeChartCtx = document.getElementById('serverUptimeChart').getContext('2d');
+
+            // Initialize charts with sample data
+            const networkTrafficChart = new Chart(trafficChartCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Network Traffic',
+                        data: [300, 500, 400, 700, 600],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Traffic (GB)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const serverUptimeChart = new Chart(uptimeChartCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Server Uptime',
+                        data: [95, 97, 93, 98, 96],
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        fill: true
+                    }, {
+                        label: 'Predicted Uptime',
+                        data: [94, 96, 94, 97, 95],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderDash: [5, 5],
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Uptime (%)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Simulated data for network status
+            const deviceStatus = [
+                { device: 'Router 1', status: 'Online', latency: 10, bandwidth: 100, packetLoss: 0.5 },
+                { device: 'Switch 2', status: 'Offline', latency: 'N/A', bandwidth: 'N/A', packetLoss: 'N/A' },
+                { device: 'Firewall 3', status: 'Online', latency: 15, bandwidth: 50, packetLoss: 0.2 }
+            ];
+
+            const deviceStatusTable = document.getElementById('deviceStatusTable');
+            deviceStatus.forEach(device => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${device.device}</td>
+                    <td class="${device.status === 'Online' ? 'status-online' : 'status-offline'}">${device.status}</td>
+                    <td>${device.latency}</td>
+                    <td>${device.bandwidth}</td>
+                    <td>${device.packetLoss}</td>
+                `;
+                deviceStatusTable.appendChild(row);
+            });
+
+            // Tab navigation functionality
+            const tabs = document.querySelectorAll('.navbar ul li a');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const targetTab = event.target.getAttribute('data-tab');
+
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active-tab');
+                    });
+
+                    document.getElementById(targetTab).classList.add('active-tab');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

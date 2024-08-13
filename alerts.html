@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerts Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        
+        .navbar ul li {
+            margin: 0 15px;
+        }
+        
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .alert-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .alert-section h2 {
+            margin-top: 0;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .alert-list {
+            margin-top: 20px;
+        }
+
+        .alert-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .alert-list th, .alert-list td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .alert-list th {
+            background-color: #f4f4f4;
+        }
+
+        .alert-list tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .alert-list tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Alerts Management</h1>
+        </header>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="alerts.html">Alerts</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="alert-section">
+                <h2>Create New Alert</h2>
+                <form id="createAlertForm">
+                    <div class="form-group">
+                        <label for="alertName">Alert Name:</label>
+                        <input type="text" id="alertName" name="alertName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertType">Alert Type:</label>
+                        <select id="alertType" name="alertType" required>
+                            <option value="email">Email</option>
+                            <option value="sms">SMS</option>
+                            <option value="push">Push Notification</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertCondition">Condition:</label>
+                        <textarea id="alertCondition" name="alertCondition" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Create Alert</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="alert-section">
+                <h2>Active Alerts</h2>
+                <div class="alert-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Alert Name</th>
+                                <th>Type</th>
+                                <th>Condition</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alertTableBody">
+                            <!-- Sample row (will be dynamically generated) -->
+                            <tr>
+                                <td>Example Alert</td>
+                                <td>Email</td>
+                                <td>CPU usage > 90%</td>
+                                <td>Active</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Network Management Inc. All rights reserved.</p>
+            <p><a href="https://github.com/mahmed-eng" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const createAlertForm = document.getElementById('createAlertForm');
+            createAlertForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                
+                const alertName = document.getElementById('alertName').value;
+                const alertType = document.getElementById('alertType').value;
+                const alertCondition = document.getElementById('alertCondition').value;
+                
+                // Here, you would typically send this data to a server to create an alert.
+                // For now, we'll just add it to the table.
+                const tableBody = document.getElementById('alertTableBody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${alertName}</td>
+                    <td>${alertType}</td>
+                    <td>${alertCondition}</td>
+                    <td>Active</td>
+                `;
+                tableBody.appendChild(newRow);
+
+                alert('Alert created successfully.');
+                createAlertForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>

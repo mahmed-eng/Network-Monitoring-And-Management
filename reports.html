@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+        
+        .navbar ul li {
+            margin: 0 15px;
+        }
+        
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .report-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .report-section h2 {
+            margin-top: 0;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .report-list {
+            margin-top: 20px;
+        }
+
+        .report-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .report-list th, .report-list td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .report-list th {
+            background-color: #f4f4f4;
+        }
+
+        .report-list tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .report-list tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Reports Management</h1>
+        </header>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="alerts.html">Alerts</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="report-section">
+                <h2>Generate New Report</h2>
+                <form id="generateReportForm">
+                    <div class="form-group">
+                        <label for="reportType">Report Type:</label>
+                        <select id="reportType" name="reportType" required>
+                            <option value="performance">Performance</option>
+                            <option value="networkTraffic">Network Traffic</option>
+                            <option value="errorLogs">Error Logs</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reportDateRange">Date Range:</label>
+                        <input type="text" id="reportDateRange" name="reportDateRange" placeholder="e.g., 2024-01-01 to 2024-01-31" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Generate Report</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-section">
+                <h2>Available Reports</h2>
+                <div class="report-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Report Name</th>
+                                <th>Type</th>
+                                <th>Date Range</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                            <!-- Sample row (will be dynamically generated) -->
+                            <tr>
+                                <td>Performance Report</td>
+                                <td>Performance</td>
+                                <td>2024-01-01 to 2024-01-31</td>
+                                <td>
+                                    <button onclick="viewReport('performance_report.pdf')">View</button>
+                                    <button onclick="downloadReport('performance_report.pdf')">Download</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Network Management Inc. All rights reserved.</p>
+            <p><a href="https://github.com/mahmed-eng" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateReportForm = document.getElementById('generateReportForm');
+            generateReportForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const reportType = document.getElementById('reportType').value;
+                const reportDateRange = document.getElementById('reportDateRange').value;
+
+                // Here, you would typically send this data to a server to generate the report.
+                // For now, we'll just add it to the table.
+                const tableBody = document.getElementById('reportTableBody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${reportType} Report</td>
+                    <td>${reportType}</td>
+                    <td>${reportDateRange}</td>
+                    <td>
+                        <button onclick="viewReport('${reportType}_report.pdf')">View</button>
+                        <button onclick="downloadReport('${reportType}_report.pdf')">Download</button>
+                    </td>
+                `;
+                tableBody.appendChild(newRow);
+
+                alert('Report generated successfully.');
+                generateReportForm.reset();
+            });
+        });
+
+        function viewReport(fileName) {
+            // Implement functionality to view the report
+            alert(`Viewing ${fileName}`);
+        }
+
+        function downloadReport(fileName) {
+            // Implement functionality to download the report
+            alert(`Downloading ${fileName}`);
+        }
+    </script>
+</body>
+</html>
